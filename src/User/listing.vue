@@ -23,7 +23,7 @@
         <p class="grey ml-1">Entries</p>
       </div>
       <div>
-        <router-link to="admin/add-user">
+        <router-link :to="{ name: 'AddUser' }">
           <a
             href="javascript:void(0)"
             data-toggle="modal"

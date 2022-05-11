@@ -16,10 +16,9 @@
           <div
             class="alert alert-dismissible fade show"
             role="alert"
-            v-if="err_msg1"
+            v-if="notification"
           >
-            <strong>{{ result }}</strong
-            >{{ message }}dsfdffffd
+            <strong></strong>{{ msg }}
             <button
               type="button"
               class="close"
@@ -29,6 +28,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+
           <!-- error message -->
           <ValidationObserver v-slot="{ handleSubmit }">
             <form @input="err_msg = null" @submit.prevent="handleSubmit(login)">
@@ -86,7 +86,7 @@
                     <label class="p_md l-grey ml-2" for="">Remember me</label>
                   </div>
 
-                  <router-link to=""
+                  <router-link :to="{ name: 'forget-password-form' }"
                     ><a href="javascript:void(0)" class="clr-orange"
                       >Forgot Password?</a
                     ></router-link
@@ -111,9 +111,9 @@
 </template>
 <script>
 export default {
-  data: function () {
+  data() {
     return {
-      err_msg1: false,
+      notification: false,
       result: "",
       msg: "",
       email: "",
@@ -123,26 +123,33 @@ export default {
 
   methods: {
     err: function (result, msg) {
-      this.err_msg1 = true;
+      this.notification = true;
       this.result = result;
       this.msg = msg;
+      console.log(result, msg);
     },
     login() {
       let fd = new FormData();
       fd.append("email", this.email);
       fd.append("password", this.password);
-
+      let self = this;
       this.axios
         .post("api/login", fd)
         .then(function (response) {
           // this.err(true, response.fail);
           // let data = response;
           if (response.data.token != undefined) {
-            window.location.replace("admin");
+            // window.location.replace("admin");
+            window.location.reload();
             localStorage.setItem("token", response.data.token);
             // console.log(localStorage.getItem("token"));
           } else {
-            console.log(response.data.Fail);
+            console.log(response.data);
+            // console.log();
+            self.err("Fail", response.data.message);
+            console.log(this.err_msg1);
+
+            // this.msg = response.data.message;
           }
         })
         .catch(function (error) {
