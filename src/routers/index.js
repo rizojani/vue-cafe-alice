@@ -4,12 +4,20 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
-import UserList from "../User/listing.vue";
-import UserDetail from "../User/details.vue";
-import AddUser from "../User/AddUser.vue";
+// User Packeges
+import UserList from "../pages/User/listing.vue";
+import UserDetail from "../pages/User/details.vue";
+import AddUser from "../pages/User/AddUser.vue";
+
+// Auth Pkg
 import AdminLogin from "../pages/Auth/Login.vue";
 import ForgetPassword from "../pages/Auth/ForgetPassword.vue";
 import CodeVerificationForm from "../pages/Auth/CodeVerificationForm.vue";
+import PasswordForm from "../pages/Auth/PasswordForm.vue";
+
+// profile pake
+import MyProfile from "../pages/Profile/MyProfile.vue";
+
 import AdminLayout from "../components/Layout/Admin";
 import AuthLayout from "../components/Layout/FullPage";
 import islogindIn from "./islogindIn";
@@ -51,6 +59,19 @@ const router = new VueRouter({
     },
 
     {
+      path: "/profile",
+      component: AdminLayout,
+      children: [
+        {
+          path: "/",
+          component: MyProfile,
+          name: "my-profile",
+          meta: { auth: true },
+        },
+      ],
+    },
+
+    {
       path: "/auth",
       component: AuthLayout,
       children: [
@@ -71,6 +92,12 @@ const router = new VueRouter({
           path: "code-verification-form",
           component: CodeVerificationForm,
           name: "code-verification-form",
+          meta: { auth: false },
+        },
+        {
+          path: "password-form",
+          component: PasswordForm,
+          name: "password-form",
           meta: { auth: false },
         },
         {

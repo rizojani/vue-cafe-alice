@@ -56,9 +56,11 @@
                   <i class="fas ml-1 fa-angle-down" @click="addCls()"></i></span
               ></a>
               <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="profile.html"
-                  ><i class="fas fa-user-circle"></i>Profile</a
-                >
+                <router-link :to="{ name: 'my-profile' }">
+                  <a class="dropdown-item" href="javascript:void(0)"
+                    ><i class="fas fa-user-circle"></i>Profile</a
+                  >
+                </router-link>
                 <a
                   class="dropdown-item"
                   href="javascript:void(0)"
@@ -111,10 +113,13 @@ export default {
     //   console.log("logout me");
     // },
 
-    logout() {
+    async logout() {
+      let response = await this.axios.post("api/logout");
+      console.log(response);
       localStorage.removeItem("token");
       window.location.reload();
     },
+
     sidbarTogal() {
       //   alert("togal sid bar");
       let isExpanded = document.body.classList.contains("menu-expanded");

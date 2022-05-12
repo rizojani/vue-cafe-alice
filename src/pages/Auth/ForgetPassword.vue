@@ -64,6 +64,7 @@ export default {
                 if(response.data.status){
                     // localStorage
                     this.$router.push({name : 'code-verification-form'});
+                    localStorage.setItem("email", this.email);
                     console.log(response.data.status);
                 }
                 // return login page for tray again            

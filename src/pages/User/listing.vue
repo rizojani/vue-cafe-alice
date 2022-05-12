@@ -60,28 +60,33 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="py-0">01</td>
-                  <td class="py-0">Mark Carson</td>
-                  <td class="py-0">mar.carson@gmail.com</td>
-                  <td class="py-0">+1-541-754-3010</td>
-                  <!-- <td class="py-0">
-                    <div class="btn-group mr-1 mb-1">
+                <tr v-for="user in users" :key="user.id">
+                  <td class="py-0">{{ user.id }}</td>
+                  <td class="py-0">
+                    {{ user.first_name }} {{ user.last_name }}
+                  </td>
+                  <td class="py-0">{{ user.email }}</td>
+                  <td class="py-0">{{ user.phone }}</td>
+                  <td class="py-0">
+                    <div class="btn-group mr-1 mb-1" id="userAction_1">
                       <button
                         type="button"
                         class="btn dropdown-toggle btn-drop-table btn-sm"
+                        id="userAction_2"
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
+                        @click="addCls()"
                       >
                         <i class="fa fa-ellipsis-v"></i>
                       </button>
                       <div
                         class="dropdown-menu"
+                        id="userAction_3"
                         x-placement="bottom-start"
                         style="
                           position: absolute;
-                          transform: translate3d(0px, 21px, 0px);
+                          transform: translate3d(-108px, 23px, 0px);
                           top: 0px;
                           left: 0px;
                           will-change: transform;
@@ -99,8 +104,8 @@
                         >
                       </div>
                     </div>
-                  </td> -->
-                  <td class="py-0">
+                  </td>
+                  <!-- <td class="py-0">
                     <span class="m-2">
                       <a href="product-category.html" class="pe-2"
                         ><button class="px-5 mt-2 py-1">Edite</button></a
@@ -116,9 +121,9 @@
                         ><button class="px-5 mt-2 py-1">Update</button></a
                       >
                     </span>
-                  </td>
+                  </td> -->
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td class="py-0">01</td>
                   <td class="py-0">Mark Carson</td>
                   <td class="py-0">mar.carson@gmail.com</td>
@@ -322,7 +327,7 @@
                       </div>
                     </div>
                   </td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </div>
@@ -408,17 +413,48 @@
 <script>
 export default {
   name: "user-list",
+  data() {
+    return {
+      users: [],
+    };
+  },
   mounted() {
     this.fetch();
   },
+
   methods: {
     async fetch() {
-      let response = await this.axios.get("/user");
-      console.log(response);
+      try {
+        let response = await this.axios.get("api/user");
+        this.users = response.data.users;
+        // console.log(this.users);
+      } catch (error) {
+        console.log(error);
+      }
     },
     addUser() {
-      $("#addUserForm").modal("show");
+      // $("#addUserForm").modal("show");
       // console.log("hi i am from add user form");
+    },
+
+    addCls() {
+      let userActionCls_1 = document.getElementById("userAction_1");
+      let userActionCls_2 = document.getElementById("userAction_2");
+      let userActionCls_3 = document.getElementById("userAction_3");
+
+      if (!userActionCls_1.classList.contains("show")) {
+        userActionCls_1.classList.add("show");
+        userActionCls_2.setAttribute("aria-expanded", true);
+        userActionCls_3.classList.add("show");
+      } else {
+        userActionCls_1.classList.remove("show");
+        userActionCls_2.setAttribute("aria-expanded", false);
+        userActionCls_3.classList.remove("show");
+      }
+
+      console.log(userActionCls_1.classList);
+      console.log(userActionCls_2.getAttribute);
+      console.log(userActionCls_3.classList);
     },
   },
 };

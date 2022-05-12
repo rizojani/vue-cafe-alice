@@ -6,9 +6,9 @@
     <sidebar />
     <div class="app-content user-management content">
       <div class="content-wrapper">
-        <div class="content-body">
-          <router-view></router-view>
-        </div>
+        <!-- <div class="content-body"> -->
+        <router-view></router-view>
+        <!-- </div> -->
       </div>
     </div>
   </div>
