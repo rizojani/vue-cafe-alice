@@ -45,14 +45,11 @@
                 data-toggle="dropdown"
               >
                 <span class="avatar avatar-online">
-                  <img
-                    src="images/portrait/small/avatar-s-1.png"
-                    alt="avatar"
-                  />
+                  <img :src="image" alt="avatar" />
                 </span>
                 <!-- dropdown-user nav-item show, fas ml-1 fa-angle-down -->
                 <span class="user-name"
-                  >Jogn Max
+                  >{{ name }}
                   <i class="fas ml-1 fa-angle-down" @click="addCls()"></i></span
               ></a>
               <div class="dropdown-menu dropdown-menu-right">
@@ -88,6 +85,16 @@
 <script>
 export default {
   name: "NavBar",
+  data() {
+    return {
+      name: "",
+      image: "",
+    };
+  },
+
+  mounted() {
+    this.user_profile();
+  },
 
   methods: {
     addCls() {
@@ -99,6 +106,25 @@ export default {
         getClassEl.classList.add("show");
       }
       // console.log(getClassEl.classList);
+    },
+
+    async user_profile() {
+      try {
+        let response = await this.axios.get("api/get-profile");
+        this.name =
+          response.data.user.first_name + " " + response.data.user.last_name;
+        this.image =
+          response.data.user.url +
+          "/storage/prfile/images/" +
+          response.data.user.image;
+        // console.log(response);
+        // this.user = response.data.user;
+        // this.first_name = response.data.user.first_name;
+        // this.last_name = response.data.user.last_name;
+        // this.email = response.data.user.email;
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     // logout() {

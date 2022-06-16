@@ -7,9 +7,13 @@ Vue.config.productionTip = false;
 import $ from "jquery";
 window.$ = $;
 import "bootstrap";
+
 // import "./axios.js";
 require("./axios.js");
 
+// @import url("@/assets/style.css");
+
+import "./assets/style.css";
 import "./assets/myjs";
 
 import { ValidationObserver, ValidationProvider, extend } from "vee-validate";

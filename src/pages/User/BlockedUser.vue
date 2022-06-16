@@ -30,9 +30,9 @@
               ><button class="px-3 py-0 h-45">Add User</button>
             </a>
           </router-link>
-          <router-link :to="{ name: 'BlockedUser' }">
+          <router-link :to="{ name: 'UserList' }">
             <a href="javascript:void(0)"
-              ><button class="px-3 py-0 h-45 ml-1">Blocked User</button>
+              ><button class="px-3 py-0 h-45 ml-1">Unblocked User</button>
             </a>
           </router-link>
           <input
@@ -118,7 +118,7 @@
                             data-toggle="modal"
                             data-target="#changestatus"
                             @click="blockUser(user.id)"
-                            ><i class="fa fa-ban"></i>Block</a
+                            ><i class="fa fa-ban"></i>Unblock</a
                           >
                         </div>
                       </div>
@@ -222,7 +222,21 @@ export default {
     this.fetch();
   },
 
+  // watch:  {
+  //   // Note: only simple paths. Expressions are not supported.
+
+  // },
+
+  // watch: function () {
+  //   this.fetch();
+  // },
+
   methods: {
+    // openModel(id) {
+    //   document.getElementById(id).modal("show");
+    //   console.log(id);
+    // },
+
     err(msg) {
       // alert(msg);
       this.notification = true;
@@ -231,7 +245,7 @@ export default {
 
     async fetch() {
       try {
-        let response = await this.axios.get("api/user");
+        let response = await this.axios.get("api/user/blocked");
         this.users = response.data.users;
         // console.log(this.users);
       } catch (error) {
@@ -255,8 +269,11 @@ export default {
       }
     },
 
-    addUser() {},
-    // @click="addCls()"
+    addUser() {
+      // $("#addUserForm").modal("show");
+      // console.log("hi i am from add user form");
+    },
+
     addCls() {
       let userActionCls_1 = document.getElementById("userAction_1");
       let userActionCls_2 = document.getElementById("userAction_2");
@@ -271,6 +288,10 @@ export default {
         userActionCls_2.setAttribute("aria-expanded", false);
         userActionCls_3.classList.remove("show");
       }
+
+      // console.log(userActionCls_1.classList);
+      // console.log(userActionCls_2.getAttribute);
+      // console.log(userActionCls_3.classList);
     },
   },
 };

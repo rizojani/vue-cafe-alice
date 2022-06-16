@@ -140,8 +140,9 @@ export default {
           // let data = response;
           if (response.data.token != undefined) {
             // window.location.replace("admin");
-            window.location.reload();
             localStorage.setItem("token", response.data.token);
+            // this.$router.push({ name: "AdminDashboard" });
+            window.location.reload();
             // console.log(localStorage.getItem("token"));
           } else {
             console.log(response.data);

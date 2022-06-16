@@ -24,4 +24,5 @@ export default {
   margin-top: 60px;
 }
 @import url("@/assets/style.css");
+@import "./assets/cafe-alice/app-assets/css/bootstrap.css";
 </style>
